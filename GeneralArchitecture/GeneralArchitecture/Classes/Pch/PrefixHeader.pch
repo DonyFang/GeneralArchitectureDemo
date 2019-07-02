@@ -1,0 +1,93 @@
+//
+//  PrefixHeader.pch
+//  GeneralArchitecture
+//
+//  Created by 方冬冬 on 2019/4/23.
+//  Copyright © 2019年 方冬冬. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+#import "GlobalSize.h"
+#import "GlobalAppearance.h"
+#import <AFNetworking.h>
+#import "UIView+Frame.h"
+#import "WSONetworking.h"
+#import "WSOAPIClient.h"
+#import "WSONetClient.h"
+#import "WSOAPIUrl.h"
+#import "UserPreferenceManager.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MJRefresh/MJRefresh.h>
+#import "NSString+TimeStamp.h"
+#import "BaseTableView.h"
+#import "BaseTableViewCell.h"
+#import "NSObject+HandleNUllString.h"
+#import <Masonry.h>
+#import "UITableView+Configuration.h"
+#import <MBProgressHUD.h>
+#import "UIColor+HexColor.h"
+#import "UIImage+Extension.h"
+#import "Singleton.h"
+#ifdef DEBUG
+//#define NSLog(...) NSLog(@"%s 第%d行 \n %@\n\n",__func__,__LINE__,[NSString stringWithFormat:__VA_ARGS__])
+//A better version of NSLog
+#define NSLog(format, ...) do {                                                                          \
+fprintf(stderr, "<%s : %d> %s\n",                                           \
+[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],  \
+__LINE__, __func__);                                                        \
+(NSLog)((format), ##__VA_ARGS__);                                           \
+fprintf(stderr, "-------\n");                                               \
+} while (0)
+
+#else
+#define NSLog(...)
+#endif
+
+#define Global_tintColor [UIColor colorWithRed:0 green:(190 / 255.0) blue:(12 / 255.0) alpha:1]
+// iPhoneX
+#define iPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+// 状态栏高度
+#define STATUS_BAR_HEIGHT (iPhoneX ? 44.f : 20.f)
+// 导航栏高度
+#define NAVIGATION_BAR_HEIGHT (iPhoneX ? 88.f : 64.f)
+// tabBar高度
+#define TAB_BAR_HEIGHT (iPhoneX ? (49.f+34.f) : 49.f)
+// home indicator
+#define HOME_INDICATOR_HEIGHT (iPhoneX ? 34.f : 0.f)
+//当前window
+#define FDWindow [[UIApplication sharedApplication].delegate window]
+
+//APP对象 （单例对象）
+#define FDApplication [UIApplication sharedApplication]
+//APP对象的delegate
+#define FDAppDelegate [UIApplication sharedApplication].delegate
+//NSUserDefaults实例化
+#define FDUserDefaults [NSUserDefaults standardUserDefaults]
+//通知中心 （单例对象）
+#define FDNotificationCenter [NSNotificationCenter defaultCenter]
+#define FDDevice_iPhoneX CGSizeEqualToSize(CGSizeMake(375, 812), [[UIScreen mainScreen] bounds].size)
+#define TotaliPhoneX (STATUS_BAR_HEIGHT+NAVIGATION_BAR_HEIGHT+HOME_INDICATOR_HEIGHT)
+//判断是否是空字符串
+#define IsNOTNullOrEmptyOfNSString(string) !((![string isKindOfClass:[NSString class]])||[string isEqualToString:@""] || (string == nil) || [string isEqualToString:@"<null>"]|| [string isEqualToString:@"(null)"]|| [string isEqualToString:@"null"]|| [string isEqualToString:@"nil"] || [string isKindOfClass:[NSNull class]]||[[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0)
+//弱引用
+#define FDWeakSelf(type)  __weak typeof(type) weak##type = type;
+//强引用
+#define FDStrongSelf(type)  __strong typeof(type) type = weak##type;
+
+//获取当前语言
+#define FDCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+//获取图片
+#define FDIMAGE_NAMED(name)[UIImage imageNamed:name]
+
+#define MyAPPID @"387682726"
+
+
+#pragma mark -- 版本判断
+#define VERSION_9_0_LATER [[UIDevice currentDevice].systemVersion doubleValue] > 8.9
+#define VERSION_8_0_LATER [[UIDevice currentDevice].systemVersion doubleValue] >= 8.0
+#define VERSION_7_0_EARLIER ([[UIDevice currentDevice].systemVersion doubleValue] < 7.0f)
+
+
+#endif /* PrefixHeader_pch */
